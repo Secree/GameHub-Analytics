@@ -6,9 +6,9 @@ export function Dashboard() {
   return (
     <div className="dashboard">
       <section className="hero">
-        <h1>🎮 Steam Analytics Dashboard</h1>
+        <h1>🎮 Game Analytics Dashboard</h1>
         <p>
-          Analyze Steam games, player trends, pricing, reviews, and market
+          Analyze game data, player trends, pricing, reviews, and market
           insights.
         </p>
       </section>
@@ -16,10 +16,10 @@ export function Dashboard() {
       <main className="dashboard-content">
         {/* Statistics */}
         <section className="stats-grid">
-          <StatCard title="Games Tracked" value="93,421" icon="🎮" />
-          <StatCard title="Active Players" value="21.3M" icon="👥" />
-          <StatCard title="Average Rating" value="87%" icon="⭐" />
-          <StatCard title="Average Price" value="$19.73" icon="💲" />
+          <StatCard title="Games Tracked" value="0" icon="🎮" />
+          <StatCard title="Active Players" value="0" icon="👥" />
+          <StatCard title="Average Rating" value="0%" icon="⭐" />
+          <StatCard title="Average Price" value="$0.00" icon="💲" />
         </section>
 
         {/* Charts */}
@@ -51,19 +51,19 @@ export function Dashboard() {
 
               <tbody>
                 <tr>
-                  <td>Counter-Strike 2</td>
+                  <td>Game 1</td>
                   <td>1,320,000</td>
                   <td>95%</td>
                 </tr>
 
                 <tr>
-                  <td>Dota 2</td>
+                  <td>Game 2</td>
                   <td>720,000</td>
                   <td>90%</td>
                 </tr>
 
                 <tr>
-                  <td>Rust</td>
+                  <td>Game 3</td>
                   <td>185,000</td>
                   <td>88%</td>
                 </tr>
