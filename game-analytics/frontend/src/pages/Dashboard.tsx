@@ -1,6 +1,8 @@
 import "../styles/Dashboard.css";
 import StatCard from "../components/StatCard";
 import Activity from "../components/Activity";
+import GameChart_Bar from "../components/GameChart_Bar";
+import GameChart_Pie from "../components/GameChart_Pie";
 
 export function Dashboard() {
   return (
@@ -26,12 +28,16 @@ export function Dashboard() {
         <section className="chart-grid">
           <div className="chart large">
             <h2>Player Growth</h2>
-            <div className="chart-placeholder">📈 Chart Here</div>
+            <div className="chart-placeholder">
+              <GameChart_Bar />
+            </div>
           </div>
 
           <div className="chart">
             <h2>Genre Distribution</h2>
-            <div className="chart-placeholder">🥧 Pie Chart</div>
+            <div className="chart-placeholder">
+              <GameChart_Pie />
+            </div>
           </div>
         </section>
 
