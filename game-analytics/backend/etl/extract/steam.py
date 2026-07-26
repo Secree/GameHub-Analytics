@@ -3,15 +3,18 @@ from pathlib import Path
 
 import requests
 
-STORE_URL = "https://store.steampowered.com/api/appdetails"
+URL = "https://store.steampowered.com/api/appdetails"
 
 
 def get_game_details(appid: int):
 
     response = requests.get(
-        STORE_URL,
-        params={"appids": appid},
-        timeout=10,
+        URL,
+        params={
+            "appids": appid,
+            "l": "english",          # Force English
+        },
+        timeout=30,
     )
 
     response.raise_for_status()

@@ -16,11 +16,21 @@ def load_game(game: dict):
         header_image,
         short_description,
         metacritic_score,
-        is_free
+        is_free,
+
+        owners,
+        average_forever,
+        median_forever,
+        positive_reviews,
+        negative_reviews,
+        score_rank,
+        initial_price,
+        current_price
     )
     VALUES (
         %s,%s,%s,%s,%s,%s,
-        %s,%s,%s,%s,%s,%s
+        %s,%s,%s,%s,%s,%s,
+        %s,%s,%s,%s,%s,%s,%s,%s
     )
 
     ON CONFLICT (appid)
@@ -36,6 +46,16 @@ def load_game(game: dict):
         short_description = EXCLUDED.short_description,
         metacritic_score = EXCLUDED.metacritic_score,
         is_free = EXCLUDED.is_free,
+
+        owners = EXCLUDED.owners,
+        average_forever = EXCLUDED.average_forever,
+        median_forever = EXCLUDED.median_forever,
+        positive_reviews = EXCLUDED.positive_reviews,
+        negative_reviews = EXCLUDED.negative_reviews,
+        score_rank = EXCLUDED.score_rank,
+        initial_price = EXCLUDED.initial_price,
+        current_price = EXCLUDED.current_price,
+
         updated_at = CURRENT_TIMESTAMP;
     """
 
@@ -57,6 +77,15 @@ def load_game(game: dict):
             game["short_description"],
             game["metacritic_score"],
             game["is_free"],
+
+            game["owners"],
+            game["average_forever"],
+            game["median_forever"],
+            game["positive_reviews"],
+            game["negative_reviews"],
+            game["score_rank"],
+            game["initial_price"],
+            game["current_price"],
         ),
     )
 

@@ -1,75 +1,51 @@
 import {
-  ResponsiveContainer,
   PieChart,
   Pie,
   Cell,
+  ResponsiveContainer,
   Tooltip,
   Legend,
 } from "recharts";
 
-const data = [
-  {
-    genre: "Action",
-    games: 45,
-  },
-  {
-    genre: "RPG",
-    games: 25,
-  },
-  {
-    genre: "Strategy",
-    games: 15,
-  },
-  {
-    genre: "Simulation",
-    games: 10,
-  },
-  {
-    genre: "Indie",
-    games: 5,
-  },
-];
+import type { ChartData } from "../types/dashboard";
+
+interface Props {
+  data: ChartData[];
+}
 
 const COLORS = [
   "#22d3ee",
   "#3b82f6",
   "#8b5cf6",
   "#14b8a6",
-  "#f59e0b",
+  "#84cc16",
+  "#f97316",
+  "#ec4899",
+  "#6366f1",
+  "#06b6d4",
+  "#facc15",
 ];
 
-const GameChart_Pie = () => {
+export default function GenrePieChart({ data }: Props) {
   return (
     <ResponsiveContainer width="100%" height={350}>
       <PieChart>
         <Pie
           data={data}
-          dataKey="games"
-          nameKey="genre"
-          cx="50%"
-          cy="50%"
-          outerRadius={110}
-          innerRadius={55}
-          paddingAngle={3}
+          dataKey="value"
+          nameKey="name"
+          outerRadius={120}
           label
         >
-          {data.map((entry, index) => (
-            <Cell
-              key={`cell-${index}`}
-              fill={COLORS[index % COLORS.length]}
-            />
+          {data.map((_, i) => (
+            <Cell key={i} fill={COLORS[i % COLORS.length]} />
           ))}
         </Pie>
 
         <Tooltip />
 
-        <Legend
-          verticalAlign="bottom"
-          height={36}
-        />
+        <Legend />
       </PieChart>
     </ResponsiveContainer>
   );
-};
-
-export default GameChart_Pie;
+}
