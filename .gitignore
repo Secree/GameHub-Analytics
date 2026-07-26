@@ -65,6 +65,7 @@ Thumbs.db
 *.sqlite
 *.sqlite3
 
+
 # PostgreSQL dump files
 *.sql
 
@@ -89,3 +90,9 @@ Thumbs.db
 # =========================
 secrets.json
 credentials.json
+
+# =========================
+# Raw Data
+# =========================
+
+game-analytics/backend/etl/raw/*/*.json
