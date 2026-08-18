@@ -1,5 +1,9 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 
@@ -15,15 +19,30 @@ export function App() {
 
       <main className="pt-20">
         <Routes>
-          <Route path="/" element={<Dashboard />} />
 
-          <Route path="/games" element={<Games />} />
+          <Route
+            path="/"
+            element={<Dashboard />}
+          />
 
-          <Route path="/game/:appid" element={<GamePage />} />
+          <Route
+            path="/games"
+            element={<Games />}
+          />
 
-          <Route path="/trends" element={<Trends />} />
+          <Route
+            path="/games/:appid"
+            element={<GamePage />}
+          />
+
+          <Route
+            path="/trends"
+            element={<Trends />}
+          />
+
         </Routes>
       </main>
+
     </BrowserRouter>
   );
 }

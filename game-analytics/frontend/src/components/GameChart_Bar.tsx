@@ -1,43 +1,91 @@
 import {
-  ResponsiveContainer,
   BarChart,
   Bar,
-  CartesianGrid,
-  Tooltip,
   XAxis,
   YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
 } from "recharts";
 
-import type { ChartData } from "../types/dashboard";
-
-interface Props {
-  data: ChartData[];
+interface TagData {
+  name: string;
+  value: number;
 }
 
-export default function TagBarChart({ data }: Props) {
+interface TagBarChartProps {
+  data: TagData[];
+}
+
+export default function TagBarChart({
+  data,
+}: TagBarChartProps) {
   return (
-    <ResponsiveContainer width="100%" height={350}>
-      <BarChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
+    <div className="responsive-chart bar-chart">
+      <ResponsiveContainer
+        width="100%"
+        height="100%"
+      >
+        <BarChart
+          data={data}
+          margin={{
+            top: 10,
+            right: 20,
+            left: 10,
+            bottom: 90,
+          }}
+        >
+          <CartesianGrid
+            stroke="#334155"
+            strokeDasharray="3 3"
+          />
 
-        <XAxis
-          dataKey="name"
-          angle={-35}
-          textAnchor="end"
-          interval={0}
-          height={90}
-        />
+          <XAxis
+            dataKey="name"
+            angle={-45}
+            textAnchor="end"
+            interval={0}
+            height={100}
+            tick={{
+              fill: "#94a3b8",
+              fontSize: 12,
+            }}
+          />
 
-        <YAxis />
+          <YAxis
+            tick={{
+              fill: "#94a3b8",
+              fontSize: 12,
+            }}
+          />
 
-        <Tooltip />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "#0f172a",
+              border: "1px solid #334155",
+              borderRadius: "8px",
+              color: "#f8fafc",
+            }}
+            labelStyle={{
+              color: "#22d3ee",
+            }}
+            itemStyle={{
+              color: "#f8fafc",
+            }}
+            formatter={(value) => [
+              Number(value).toLocaleString(),
+              "Games",
+            ]}
+          />
 
-        <Bar
-          dataKey="value"
-          fill="#22d3ee"
-          radius={[5, 5, 0, 0]}
-        />
-      </BarChart>
-    </ResponsiveContainer>
+          <Bar
+            dataKey="value"
+            name="Games"
+            fill="#6366f1"
+            radius={[4, 4, 0, 0]}
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

@@ -1,26 +1,53 @@
-import json
-from pathlib import Path
 import requests
+from datetime import datetime
 
-URL = "https://api.steampowered.com/ISteamUserStats/GetNumberOfCurrentPlayers/v1/"
+
+STEAM_PLAYER_URL = (
+    "https://api.steampowered.com/"
+    "ISteamUserStats/GetNumberOfCurrentPlayers/v1/"
+)
 
 
 def get_player_history(appid: int):
 
-    response = requests.get(
-        URL,
-        params={"appid": appid},
-        timeout=10,
-    )
+    try:
+        response = requests.get(
+            STEAM_PLAYER_URL,
+            params={
+                "appid": appid
+            },
+            timeout=10,
+        )
 
-    response.raise_for_status()
+        # Some Steam games do not provide player-count data
+        if response.status_code == 404:
+            print(f"No player data for {appid}")
+            return None
 
-    data = response.json()
+        response.raise_for_status()
 
-    raw_dir = Path("etl/raw/player_history")
-    raw_dir.mkdir(parents=True, exist_ok=True)
+        data = response.json()
 
-    with open(raw_dir / f"{appid}.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=4)
+        response_data = data.get("response")
 
-    return data
+        if not response_data:
+            print(f"No player data for {appid}")
+            return None
+
+        player_count = response_data.get("player_count")
+
+        if player_count is None:
+            print(f"No player count for {appid}")
+            return None
+
+        return {
+            "appid": appid,
+            "player_count": player_count,
+            "collected_at": datetime.now(),
+        }
+
+    except requests.RequestException as e:
+
+        print(f"Request failed for {appid}: {e}")
+
+        return None

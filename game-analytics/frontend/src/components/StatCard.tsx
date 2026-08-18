@@ -3,13 +3,11 @@ import "../styles/StatCard.css";
 interface Props {
   title: string;
   value: string;
-  icon: string;
 }
 
-export function StatCard({ title, value, icon }: Props) {
+export function StatCard({ title, value }: Props) {
   return (
     <div className="stat-card">
-      <div className="icon">{icon}</div>
 
       <h3>{title}</h3>
 

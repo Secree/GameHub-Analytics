@@ -144,3 +144,6 @@ Bulacan State University
 | Containerization    | Docker                                        |
 | Version Control     | Git + GitHub                                  |
 | Deployment          | Vercel + Render + Neon PostgreSQL             |
+
+to run frontend go to the frontend folder and type npm run dev
+to run backend go to backend folder and type uvicorn main:app --reload

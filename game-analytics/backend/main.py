@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from routes.games import router as games_router
 from routes.dashboard import router as dashboard_router
+from routes.trends import router as trends_router
 
 app = FastAPI()
 
@@ -16,3 +17,4 @@ app.add_middleware(
 
 app.include_router(games_router)
 app.include_router(dashboard_router)
+app.include_router(trends_router)
