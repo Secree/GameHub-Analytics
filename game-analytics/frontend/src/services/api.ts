@@ -186,6 +186,22 @@ export async function searchTags(
   return response.data;
 }
 
+export interface PlayerHistory {
+  collected_at: string;
+  player_count: number;
+}
+
+export async function getPlayerHistory(
+  appid: number
+): Promise<PlayerHistory[]> {
+
+  const response = await api.get(
+    `/games/${appid}/players`
+  );
+
+  return response.data;
+}
+
 
 // ============================================================
 // DEFAULT EXPORT

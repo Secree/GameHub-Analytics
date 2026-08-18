@@ -1,9 +1,5 @@
 import { api } from "./api";
 
-// ============================================================
-// TYPES
-// ============================================================
-
 export interface Game {
   appid: number;
   name: string;
@@ -30,36 +26,21 @@ export interface GamesResponse {
 export interface GetGamesParams {
   page?: number;
   limit?: number;
-
   search?: string;
-
   genre?: string;
-
   free?: boolean;
-
   tags?: string[];
-
   tag_mode?: "OR" | "AND";
-
   sort?: "name" | "price" | "reviews" | "release";
-
   order?: "asc" | "desc";
 }
-
-
-// ============================================================
-// GET GAMES
-// ============================================================
 
 export async function getGames(
   params: GetGamesParams = {}
 ): Promise<GamesResponse> {
 
-  const searchParams = new URLSearchParams();
-
-  // ----------------------------------------------------------
-  // Pagination
-  // ----------------------------------------------------------
+  const searchParams =
+    new URLSearchParams();
 
   if (params.page !== undefined) {
     searchParams.append(
@@ -75,20 +56,12 @@ export async function getGames(
     );
   }
 
-  // ----------------------------------------------------------
-  // Search
-  // ----------------------------------------------------------
-
   if (params.search) {
     searchParams.append(
       "search",
       params.search
     );
   }
-
-  // ----------------------------------------------------------
-  // Genre
-  // ----------------------------------------------------------
 
   if (params.genre) {
     searchParams.append(
@@ -97,20 +70,12 @@ export async function getGames(
     );
   }
 
-  // ----------------------------------------------------------
-  // Free
-  // ----------------------------------------------------------
-
   if (params.free !== undefined) {
     searchParams.append(
       "free",
       String(params.free)
     );
   }
-
-  // ----------------------------------------------------------
-  // Tags
-  // ----------------------------------------------------------
 
   if (
     params.tags &&
@@ -128,20 +93,12 @@ export async function getGames(
 
   }
 
-  // ----------------------------------------------------------
-  // Tag mode
-  // ----------------------------------------------------------
-
   if (params.tag_mode) {
     searchParams.append(
       "tag_mode",
       params.tag_mode
     );
   }
-
-  // ----------------------------------------------------------
-  // Sort
-  // ----------------------------------------------------------
 
   if (params.sort) {
     searchParams.append(
@@ -150,10 +107,6 @@ export async function getGames(
     );
   }
 
-  // ----------------------------------------------------------
-  // Order
-  // ----------------------------------------------------------
-
   if (params.order) {
     searchParams.append(
       "order",
@@ -161,49 +114,38 @@ export async function getGames(
     );
   }
 
-  // ----------------------------------------------------------
-  // REQUEST
-  // ----------------------------------------------------------
-
-  const response = await api.get(
-    `/games?${searchParams.toString()}`
-  );
+  const response =
+    await api.get(
+      `/games?${searchParams.toString()}`
+    );
 
   return response.data;
 }
 
-
-// ============================================================
-// GET TAGS
-// ============================================================
 
 export async function getTags(): Promise<Tag[]> {
 
-  const response = await api.get(
-    "/games/tags"
-  );
+  const response =
+    await api.get("/games/tags");
 
   return response.data;
 }
 
-
-// ============================================================
-// SEARCH TAGS
-// ============================================================
 
 export async function searchTags(
   query: string
 ): Promise<Tag[]> {
 
-  const response = await api.get(
-    "/games/tags/search",
-    {
-      params: {
-        q: query,
-        limit: 20,
-      },
-    }
-  );
+  const response =
+    await api.get(
+      "/games/tags/search",
+      {
+        params: {
+          q: query,
+          limit: 20,
+        },
+      }
+    );
 
   return response.data;
 }
