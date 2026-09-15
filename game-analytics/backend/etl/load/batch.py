@@ -1,4 +1,8 @@
 from database import get_connection
+from psycopg2.extras import execute_values
+
+
+SEED_BATCH_SIZE = 200000
 
 
 def seed_games(apps):
@@ -6,9 +10,17 @@ def seed_games(apps):
     conn = get_connection()
     cur = conn.cursor()
 
-    for app in apps:
+    total = len(apps)
 
-        cur.execute(
+    for start in range(0, total, SEED_BATCH_SIZE):
+        batch = apps[start:start + SEED_BATCH_SIZE]
+        values = [
+            (app["appid"], app["name"], False)
+            for app in batch
+        ]
+
+        execute_values(
+            cur,
             """
             INSERT INTO gamehub_analytics.games
             (
@@ -16,23 +28,18 @@ def seed_games(apps):
                 name,
                 processed
             )
-            VALUES
-            (
-                %s,
-                %s,
-                FALSE
-            )
-
+            VALUES %s
             ON CONFLICT (appid)
             DO NOTHING;
             """,
-            (
-                app["appid"],
-                app["name"]
-            )
+            values,
+            page_size=SEED_BATCH_SIZE,
         )
-
-    conn.commit()
+        conn.commit()
+        print(
+            f"Seeded {min(start + len(batch), total)}/{total} apps",
+            flush=True,
+        )
 
     cur.close()
     conn.close()
