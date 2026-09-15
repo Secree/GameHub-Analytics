@@ -363,6 +363,22 @@ http://localhost:5173
 
 ---
 
+# Deploying to the Web
+
+Deploy the backend as a Docker service using `game-analytics/backend/Dockerfile`.
+Set `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`, and `STEAM_API_KEY`.
+Set `ALLOWED_ORIGINS` to the public frontend URL.
+
+Deploy `game-analytics/frontend` as a Vite site with `npm run build` as the build
+command and `dist` as the output directory. Set `VITE_API_URL` to the public
+backend URL. The included `frontend/vercel.json` keeps React Router routes
+working when a page is refreshed.
+
+After deployment, verify the backend at `/health`, then confirm that dashboard,
+games, and trends data load from the hosted API.
+
+---
+
 # 🔌 Main API Endpoints
 
 ## Games

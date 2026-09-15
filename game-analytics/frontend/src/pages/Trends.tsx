@@ -32,16 +32,6 @@ import {
   type PriceTrend,
 } from "../services/trends";
 
-
-const COLORS = [
-  "#6366f1",
-  "#8b5cf6",
-  "#ec4899",
-  "#ef4444",
-  "#f97316",
-];
-
-
 export function Trends() {
 
   const [
