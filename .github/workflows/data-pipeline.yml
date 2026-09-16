@@ -5,6 +5,10 @@ on:
     - cron: "0 * * * *"
   workflow_dispatch:
 
+concurrency:
+  group: gamehub-data-pipeline
+  cancel-in-progress: false
+
 jobs:
   update-data:
     runs-on: ubuntu-latest
