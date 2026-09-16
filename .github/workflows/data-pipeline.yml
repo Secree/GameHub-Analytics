@@ -1,0 +1,37 @@
+name: Update GameHub data
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: game-analytics/backend
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install backend dependencies
+        run: pip install -r requirements.txt
+
+      - name: Process unprocessed games
+        run: python run_etl.py
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          STEAM_API_KEY: ${{ secrets.STEAM_API_KEY }}
+
+      - name: Update current player counts
+        run: python update_players.py
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PLAYER_UPDATE_LIMIT: "5000"

@@ -1,3 +1,5 @@
+import os
+
 from database import get_connection
 
 from etl.extract.player_history import get_player_history
@@ -10,10 +12,19 @@ def get_all_appids():
     cur = conn.cursor()
 
     cur.execute("""
-        SELECT appid
-        FROM gamehub_analytics.games
-        ORDER BY appid;
-    """)
+        SELECT g.appid
+        FROM gamehub_analytics.games g
+        LEFT JOIN (
+            SELECT DISTINCT ON (appid)
+                appid,
+                collected_at
+            FROM gamehub_analytics.player_history
+            ORDER BY appid, collected_at DESC
+        ) latest
+            ON latest.appid = g.appid
+        ORDER BY latest.collected_at NULLS FIRST, g.appid
+        LIMIT %s;
+    """, (int(os.getenv("PLAYER_UPDATE_LIMIT", "5000")),))
 
     appids = [
         row[0]
