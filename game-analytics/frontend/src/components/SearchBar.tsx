@@ -48,7 +48,7 @@ export default function SearchBar() {
             <div
               key={game.appid}
               className="search-item"
-              onClick={() => navigate(`/game/${game.appid}`)}
+              onClick={() => navigate(`/games/${game.appid}`)}
             >
               <img
                 src={game.image}

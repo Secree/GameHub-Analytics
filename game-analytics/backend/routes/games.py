@@ -342,6 +342,50 @@ def list_games(
 
 
 # ============================================================
+# SEARCH GAMES
+# ============================================================
+
+@router.get("/search")
+def search_games(q: str = "", limit: int = 10):
+
+    if limit < 1:
+        limit = 10
+
+    if limit > 50:
+        limit = 50
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    try:
+
+        cur.execute("""
+            SELECT
+                appid,
+                name,
+                header_image
+            FROM gamehub_analytics.games
+            WHERE name ILIKE %s
+            ORDER BY name ASC
+            LIMIT %s
+        """, (f"%{q}%", limit))
+
+        return [
+            {
+                "appid": row[0],
+                "name": row[1],
+                "image": row[2],
+            }
+            for row in cur.fetchall()
+        ]
+
+    finally:
+
+        cur.close()
+        conn.close()
+
+
+# ============================================================
 # GET ALL TAGS
 # ============================================================
 
